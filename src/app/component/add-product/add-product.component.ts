@@ -110,7 +110,6 @@ export class AddProductComponent implements OnInit {
       });
     } else {
       if (this.form.invalid) {
-        window.alert('Please fill out all required fields correctly.');
         return;
       }
 

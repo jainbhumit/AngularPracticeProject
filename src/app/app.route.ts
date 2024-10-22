@@ -9,6 +9,7 @@ import { DashboardComponent } from './component/dashboard/dashboard.component';
 import { AddProductComponent } from './component/add-product/add-product.component';
 import { inject } from '@angular/core';
 import { RoleComponent } from './component/role/role.component';
+import { Role } from './config';
 
 export const authorisation: CanActivateFn = (
   route: ActivatedRouteSnapshot,
@@ -17,7 +18,7 @@ export const authorisation: CanActivateFn = (
   const role = route.paramMap.get('role');
   const router = inject(Router);
 
-  if (role === 'admin') return true;
+  if (role === Role.admin) return true;
   return router.navigate(['/unauthorise']);
 };
 

@@ -45,41 +45,50 @@
 <div>
   <h1 id="header-title">Welcome</h1>
 
-  <!-- PrimeNG Button for Adding a Product -->
-  <button pButton type="button" label="Add Product" icon="pi pi-plus" [routerLink]="role() + '/add-product'"
+  <button pButton type="button" label="Add Product"
+    icon="pi pi-plus" [routerLink]="role() + '/add-product'"
     id="add-product-btn" class="p-mb-3"></button>
-  <button pButton type="button" label="Change Account" (click)="toggleAccount()" icon="pi pi-plus" id="add-product-btn"
+  <button pButton type="button" label="Change Account" (click)="toggleAccount()"
+    icon="pi pi-plus" id="add-product-btn"
     class="p-mb-3"></button>
   <div id="products-container" class="products">
     <h3 id="products-title">List of Products</h3>
 
     <div class="search">
       <form [formGroup]="searchText">
-        <input pInputText type="text" placeholder="Search" formControlName="text" class="p-mr-2 p-mb-3" />
+        <input pInputText type="text" placeholder="Search"
+          formControlName="text" class="p-mr-2 p-mb-3" />
       </form>
     </div>
 
     <div id="products-grid" class="p-grid">
-      <div *ngFor="let product of getProduct(); let i = index" class="p-col-12 p-md-4">
+      @for (product of getProduct(); track $index) {
+      <div class="p-col-12 p-md-4">
         <p-card header="{{ product.title }}" subheader="ID: {{ product.id }}">
           <ng-template pTemplate="content">
             <div class="product-image">
-              <img [src]="product.images[0]" alt="{{ product.title }}" class="product-img p-shadow-3" />
+              <img [src]="product.images[0]" alt="{{ product.title }}"
+                class="product-img p-shadow-3" />
             </div>
             <div class="product-info p-mt-3">
               <p class="product-price">Price: {{ product.price | rupee }}</p>
             </div>
             <div class="product-actions p-mt-3">
-             
-              <button pButton type="button" label="Edit" icon="pi pi-pencil" class="p-button-success p-mr-2"
-                [routerLink]="role() + '/edit/' + product.id" [disabled]="role()==='admin' ? false : true" *appCustomDirective="role()==='admin' ? true : false"></button>
 
-              <button pButton type="button" label="Delete" icon="pi pi-trash" class="p-button-danger"
-                (click)="onDelete(product.id)" [disabled]="role()==='admin' ? false : true" *appCustomDirective="role()==='admin' ? true : false"></button>
+              <button pButton type="button" label="Edit" icon="pi pi-pencil"
+                class="p-button-success p-mr-2"
+                [routerLink]="role() + '/edit/' + product.id"
+                *appCustomDirective="checkAdmin()"></button>
+
+              <button pButton type="button" label="Delete" icon="pi pi-trash"
+                class="p-button-danger"
+                (click)="onDelete(product.id)"
+                *appCustomDirective="checkAdmin()"></button>
             </div>
           </ng-template>
         </p-card>
       </div>
+      }
     </div>
   </div>
 </div>
